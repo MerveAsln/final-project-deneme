@@ -1,0 +1,25 @@
+version: "3.9"
+services:
+  mysql-mathpool:
+    container_name: mysql-mathpool
+    image: mysql
+    ports:
+      - 3306:3306
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=mathpool_12
+      - MYSQL_PASSWORD=mathpool_12
+      - MYSQL_USER=mathpool
+      - MYSQL_DATABASE=mathpool
+    volumes:
+      - ./mysqlDB:/var/lib/meinsql/data
+  phpmyadmin-mathpool:
+    image: phpmyadmin/phpmyadmin
+    container_name: pma-mathpool
+    depends_on:
+      - mysql-mathpool
+    environment:
+      PMA_HOST: mysql-mathpool
+    restart: always
+    ports:
+      - 8080:80
